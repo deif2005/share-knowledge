@@ -1,0 +1,49 @@
+1.下载安装包:wget -P /usr/soft/ http://apache.fayea.com/zookeeper/zookeeper-3.4.11/zookeeper-3.4.11.tar.gz,然后解压tar -zxvf zookeepre-3.4.11.tar.gz
+(http://apache.fayea.com/zookeeper/)
+
+2.配置环境变量（可选）
+#set Zookeeper Enviroment
+#export ZOOKEEPER_HOME=/usr/soft/zookeeper-3.4.11
+#export PATH=$PATH:$ZOOKEEPER_HOME/bin
+
+
+3.去conf目录下，创建配置文件，
+cp zoo_sample.cfg zoo.cfg
+之所以取名zoo.cfg是因为这是启动时默认约定读取的
+增加（创建data,logs目录）
+dataDir=/usr/soft/zookeeper-3.4.11/data
+dataLogDir=/usr/soft/zookeeper-3.4.11/logs
+server.1=192.168.1.136:2888:3888
+2888 表示的是这个服务器与集群中的 Leader 服务器交换信息的端，2888端口简单来说就是zookeeper服务之间的通信端口；
+3888端口是zookeeper与其他应用程序通信的端口
+
+4.开启zookeeper
+./zkServer.sh start
+执行jps查看状态（jps查看jvm中java启动的进程pid）
+其中QuorumPeerMain是zookeeper进程
+使用客户端连接:
+zkCli.sh -server 127.0.0.1:2181 
+
+查看所有节点
+[zk: 127.0.0.1:2181(CONNECTED) 1] ls /
+查看包括time、version等信息
+ls2 /
+创建znode
+create /test "hello"
+获取znode的数据
+get /test
+修改znode内容
+set /test "ricky"
+删除znode
+delete /test
+退出客户端
+quit
+
+5.设置开机启动
+编辑/etc/rc.local文件，加入su -defi -c '/usr/soft/zookeeper-3.4.11/bin/zkServer.sh start'
+
+用defi无法启动zookeeper，原因是之前的文件是由root创建的，defi用户无权限使用
+
+
+
+
