@@ -1,0 +1,1 @@
+idea升级，直接去官网下载最新版本，去http://blog.csdn.net/zx110503/article/details/78734428修改注册方法,去http://idea.lanyus.com/获取注册码。

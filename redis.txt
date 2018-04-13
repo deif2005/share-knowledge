@@ -1,0 +1,52 @@
+1.Redis约定次版本号（即第一个小数点后的数字）为偶数的版本是稳定版（如2.8版、3.0版），奇数版本是非稳定版（如2.7版、2.9版），生产环境下一般需要使用稳定版本。
+wget http://download.redis.io/releases/redis-4.0.2.tar.gz
+
+解压安装包并安装
+tar xzf redis-4.0.2.tar.gz
+cd redis-4.0.2
+make
+make install
+
+2.启动和停止Redis
+直接启动 redis-server
+redis-cli 客户端连接
+
+通过初始化脚本启动Redis
+在Redis源代码目录的utils文件夹中有一个名为redis_init_script的初始化脚本文件。需要配置Redis的运行方式和持久化文件、日志文件的存储位置。步骤如下：
+
+1、配置初始化脚本
+首先将初始化脚本复制到/etc/init.d 目录中，文件名为 redis_端口号，其中端口号表示要让Redis监听的端口号，客户端通过该端口连接Redis。然后修改脚本第6行的REDISPORT变量的值为同样的端口号。
+
+2、建立以下需要的文件夹。
+目录名 	Value
+/etc/redis 	存放Redis的配置文件
+/var/redis/端口号 	存放Redis的持久化文件
+
+3、修改配置文件
+参数 	值 	说明
+daemonize 	yes 	使Redis以守护进程模式运行
+pidfile 	/var/run/redis_端口号.pid 	设置Redis的PID文件位置
+port 	端口号 	设置Redis监听的端口号
+dir 	/var/redis/端口号 	设置持久化文件存放位置
+注：需要设置bind 127.0.0.1 为 bind 0.0.0.0才能让其它机器连接,这样设置使得内网和公网都可以访问redis服务，如果设置为本机地址，则只有内网才能访问redis服务
+
+4.让Redis随系统自动启动，这还需要对Redis初始化脚本进行简单修改，执行命令：
+vim /etc/init.d/redis_6379
+在打开的redis初始化脚本文件头部第四行的位置，追加下面两句
+# chkconfig: 2345 90 10 
+# description: Redis is a persistent key-value database
+//设置开机执行redis脚本
+chkconfig redis_6379 on
+
+通过上面的操作后，以后也可以直接用下面的命令对Redis进行启动和关闭了，如下
+service redis_6379 start
+service redis_6379 stop
+
+5.停止Redis
+考虑到 Redis 有可能正在将内存中的数据同步到硬盘中，强行终止 Redis 进程可能会导致数据丢失。正确停止Redis的方式应该是向Redis发送SHUTDOWN命令，方法为：
+redis-cli SHUTDOWN
+
+当Redis收到SHUTDOWN命令后，会先断开所有客户端连接，然后根据配置执行持久化，最后完成退出。
+Redis可以妥善处理 SIGTERM信号，所以使用 kill Redis 进程的 PID也可以正常结束Redis，效果与发送SHUTDOWN命令一样。
+
+

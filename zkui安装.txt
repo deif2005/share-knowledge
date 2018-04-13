@@ -1,0 +1,28 @@
+1.git安装
+查看系统是否已经安装git
+git --version
+yum 安装git
+yum install git
+yum --version
+卸载git
+yum remove git
+
+git clone https://github.com/DeemOpen/zkui.git（下载到当前目录）
+
+
+2.安装maven
+使用sdkman安装
+sdk install maven
+mvn -version
+mvn clean install
+
+3.修改配置
+#cp config.cfg target/
+#cd target/
+#vim config.cfg
+    serverPort=9091     #指定端口
+    zkServer=172.60.0.107:2181,localhost:2181       #第一个server总是leader
+    userSet = {"users": [{ "username":"admin" , "password":"admin","role": "ADMIN" },{ "username":"appconfig" , "password":"appconfig","role": "USER" }]}   #设置登录用户及其权限
+
+4.后台运行
+nohup java -jar zkui-2.0-SNAPSHOT-jar-with-dependencies.jar & 

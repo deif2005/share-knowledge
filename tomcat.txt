@@ -1,9 +1,20 @@
-添加tomcat用户：
+1.下载
+wget -P /usr/soft/ http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-7/v7.0.85/bin/apache-tomcat-7.0.85.tar.gz
+
+解压安装
+tar -zxvf apache-tomcat-7.0.85.tar.gz
+
+配置tomcat-users.xml
+<role rolename="manager"/> 
+<role rolename="admin"/> 
 <role rolename="admin-gui"/>
 <role rolename="manager-gui"/>
-<user username="tomcat" password="tomcat" roles="admin-gui"/>
-<user username="admin" password="1234" roles="manager-gui"/>
+<user username="admin" password="admin" roles="admin-gui,manager-gui"/>
 
-admin-gui是host manager的用户
-manager-gui是manager webapp用户
-添加重启
+配置context.xml
+vi ./opt/apache-tomcat-9.0.6/webapps/manager/META-INF/context.xml
+<Context antiResourceLocking="false" privileged="true" >
+<!--<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1|\d+\.\d+\.\d+\.\d+" />-->
+<!--<Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>-->
+</Context>
