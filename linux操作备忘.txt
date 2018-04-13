@@ -53,4 +53,4 @@ iptables -I INPUT -s ***.***.***.*** -j DROP
 ½â·âip
 iptables -D INPUT -s ***.***.***.*** -j DROP
 ²é¿´
-iptables -L
+iptables -L 
