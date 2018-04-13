@@ -1,3 +1,0 @@
-sdk list gradle
-sdk install gradle 3.1
-/root/.sdkman/candidates/
