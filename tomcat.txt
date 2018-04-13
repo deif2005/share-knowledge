@@ -1,0 +1,9 @@
+添加tomcat用户：
+<role rolename="admin-gui"/>
+<role rolename="manager-gui"/>
+<user username="tomcat" password="tomcat" roles="admin-gui"/>
+<user username="admin" password="1234" roles="manager-gui"/>
+
+admin-gui是host manager的用户
+manager-gui是manager webapp用户
+添加重启
