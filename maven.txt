@@ -1,0 +1,9 @@
+1.下载最新版
+http://maven.apache.org/download.cgi
+
+2.配置环境变量
+添加 %MAVEN_HOME%=F:\workspace\apache-maven-3.5.3
+添加path %MAVEN_HOME%\bin
+
+3.测试安装
+mvn -v
