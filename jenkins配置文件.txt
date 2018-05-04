@@ -1,0 +1,15 @@
+一、安装文件的信息
+
+/etc/init.d/jenkins文件，文件中有关于Jenkins安装路径、以及运行的PID文件等一些信息。
+
+二、日志文件
+
+/var/log/jenkins该目录下存放的是服务器的日志以及每一个构建的项目的日志。
+
+/var/lib/jenkins 该目录是JENKINS_HOME的默认主目录
+
+/var/cache/jenkins存放的是包相关的信息
+
+三、服务器的配置文件
+
+/etc/sysconfig/jenkins 该文件中可以设置服务器的端口，等信息

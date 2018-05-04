@@ -1,0 +1,20 @@
+1.安装指定版本
+sdk install gradle 3.0
+gradle -version
+
+2.安装和移除
+sdk uninstall gradle
+ or
+ sdk rm gradle
+
+3.使用临时版本
+sdk use gradle 3.0
+
+4.设置默认版本
+sdk default gradle 3.0
+
+5.查看安装的sdk版本列表
+sdk current gradle
+
+
+

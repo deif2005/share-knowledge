@@ -16,6 +16,10 @@ uname -a
 profile配置失效：
 export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin
 
+
+打开文件数及句柄等
+ulimit -a
+
 1、reboot   普通重启
 　　2、shutdown -r now 立刻重启(root用户使用)
 　　3、shutdown -r 10 过10分钟自动重启(root用户使用)
@@ -25,3 +29,18 @@ export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin
 Linux centos关机命令：
 　　1、halt 立刻关机
 　　2、poweroff 立刻关机
+
+
+
+同步系统时间
+1.  安装ntpdate工具
+
+# yum -y install ntp ntpdate
+
+2.  设置系统时间与网络时间同步
+
+# ntpdate cn.pool.ntp.org
+
+3.  将系统时间写入硬件时间
+
+# hwclock --systohc

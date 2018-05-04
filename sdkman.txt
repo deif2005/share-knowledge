@@ -1,3 +1,9 @@
+1.安装
+curl -s "https://get.sdkman.io" | bash
+
+2.执行脚本
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+
 sdk list gradle
 sdk install gradle 3.1
 /root/.sdkman/candidates/

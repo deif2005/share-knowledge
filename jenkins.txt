@@ -24,21 +24,18 @@ sudo rpm -ih jenkins-1.562-1.1.noarch.rpm
 
 /var/log/jenkins/jenkins.log    Jenkins日志文件
 
- 启动命令：
-
-sudo service jenkins start
 
 1. 安装jdk环境
 
 先检查一下java虚拟机有没有安装，如果没有就安装
 
-java --version
+java -version（whereis java查找java路径）
 
 
 2.在jenkins配置文件中配置
 
 需要“vi /etc/init.d/jenkins”，把java路径加上
-candidates="/usr/java/jdk1.7.0_79/bin/java
+candidates="/usr/java/jdk1.7.0_79/bin/java"
 
 vi /etc/sysconfig/jenkins
 
@@ -51,3 +48,10 @@ JENKINS_PORT="8080"  此端口不冲突可以不修改
 vi /etc/sysconfig/jenkins
 
 将JENKINS_USER="jenkins"调整为JENKINS_USER="root"
+
+启动命令：
+sudo service jenkins start
+
+从该文件中获取进入密码
+vi /var/lib/jenkins/secrets/initialAdminPassword
+

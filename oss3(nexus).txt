@@ -1,0 +1,66 @@
+1.安装Repository Mansger oss3
+https://sonatype-download.global.ssl.fastly.net/nexus/3/nexus-3.10.0-04-unix.tar.gz
+
+2.解压安装
+tar -zvxf nexus-3.10.0-04-unix.tar.gz 
+修改配置
+vim /etc/profile
+
+3.启动
+bin/nexus start/stop/status 
+
+WARNING: Detected execution as "root" user. This is NOT recommended! 
+去掉上面WARNING的办法：
+vim /etc/profile
+export RUN_AS_USER=root
+source /etc/profile
+
+nexus服务启动成功后，需要稍等一段时间，8081端口才起来
+修改系统文件打开数限制: https://help.sonatype.com/repomanager3/system-requirements#SystemRequirements-Linux
+vi /etc/security/limits.conf
+添加:root	-	nofile	65536 修改后要重启系统
+
+默认登录地址：
+http://192.168.1.127:8081
+admin
+admin123
+
+
+4.安装nexus为service
+以root用户身份，设置为系统服务
+cd /etc/init.d
+cp /usr/local/nexus/bin /nexus ./nexus
+chmod 755 /etc/init.d/nexus
+
+增加nexus服务
+$ cd /etc/init.d
+
+增加nexus服务
+$ chkconfig --add nexus
+
+添加运行级别3、4、5
+$ chkconfig --levels 345 nexus on
+
+启动nexus
+$ service nexus start
+
+验证关系成功启动
+$ tail -f /usr/local/nexus/logs/wrapper.log
+
+编辑/etc/init.d/nexus的文本
+
+NEXUS_HOME="/usr/local/nexus"
+PIDDIR="${NEXUS_HOME}" 
+RUN_AS_USER = "nexus"  此处用户名可随意选择，最好不要是root
+
+注：①如果使用root，未创建其它用户，则改为root（不建议使用root）
+②如果使用该设置，需要：
+
+nexus 用户存在
+useradd  nexus
+
+更改nexus 安装目录的Owner和Group为nexus
+chown nexus nexus nexus
+
+启动服务
+service nexus start
