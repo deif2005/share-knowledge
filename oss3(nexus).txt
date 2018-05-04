@@ -6,7 +6,7 @@ tar -zvxf nexus-3.10.0-04-unix.tar.gz
 修改配置
 vim /etc/profile
 
-3.启动
+3.启动(在解压目录下)
 bin/nexus start/stop/status 
 
 WARNING: Detected execution as "root" user. This is NOT recommended! 

@@ -5,11 +5,11 @@ wget -P /usr/soft/ http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-7/v7
 tar -zxvf apache-tomcat-7.0.85.tar.gz
 
 ≈‰÷√tomcat-users.xml
-<role rolename="manager"/> 
-<role rolename="admin"/> 
-<role rolename="admin-gui"/>
 <role rolename="manager-gui"/>
-<user username="admin" password="admin" roles="admin-gui,manager-gui"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <role rolename="manager-status"/>
+  <user username="usiwxy" password="wxy123" roles="manager-gui,manager-script,manager-jmx,manager-status"/>
 
 ≈‰÷√context.xml
 vi ./opt/apache-tomcat-9.0.6/webapps/manager/META-INF/context.xml

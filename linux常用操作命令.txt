@@ -44,3 +44,10 @@ Linux centos关机命令：
 3.  将系统时间写入硬件时间
 
 # hwclock --systohc
+
+查看端口以及使用进程
+查某个端口：lsof -i tcp:80
+列出所有端口：netstat -ntlp
+查看某个进程：ps 1777
+查看端口哪个进程：netstat -lnp|grep 88
+
