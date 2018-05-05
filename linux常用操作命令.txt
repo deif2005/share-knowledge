@@ -51,3 +51,8 @@ Linux centos关机命令：
 查看某个进程：ps 1777
 查看端口哪个进程：netstat -lnp|grep 88
 
+
+查看cpu使用 top
+查看内存使用 free
+查看磁盘使用 df -h
+
