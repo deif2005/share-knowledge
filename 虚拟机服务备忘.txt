@@ -1,0 +1,8 @@
+安装的服务有：
+1.tomcat 8080 手动启动
+2.nginx 80   开机启动
+3.redis 6379 开机启动
+4.jenkins 8099 开机启动 admin admin
+5.zookeeper 2181 手动启动
+6.Repository Mansger oss3(nexus) 8081 手动启动 admin admin123 启动慢
+
