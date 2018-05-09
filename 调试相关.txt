@@ -1,0 +1,4 @@
+远程调试服务
+1.idea里添加-->Edit Configruations-->增加Remote
+2.在服务tomcat，catalina.sh中添加（端口5005，可改）
+JAVA_OPTIONS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=n"
