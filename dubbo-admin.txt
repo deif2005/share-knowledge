@@ -1,0 +1,5 @@
+1.将dubbo-admin-2.0.0.war放入webapps中
+2.修改war包中dubbo.properties文件
+dubbo.registry.address=zookeeper://127.0.0.1:2181
+dubbo.admin.root.password=root
+dubbo.admin.guest.password=guest
