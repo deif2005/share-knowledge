@@ -25,4 +25,4 @@ mvn clean install
     userSet = {"users": [{ "username":"admin" , "password":"admin","role": "ADMIN" },{ "username":"appconfig" , "password":"appconfig","role": "USER" }]}   #设置登录用户及其权限
 
 4.后台运行
-nohup java -jar zkui-2.0-SNAPSHOT-jar-with-dependencies.jar & 
+nohup java -jar zkui-2.0-SNAPSHOT-jar-with-dependencies.jar &

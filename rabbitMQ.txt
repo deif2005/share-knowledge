@@ -1,0 +1,45 @@
+1.根据网上介绍的EPEL安装方法，无法安装成功，
+wget http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
+报404，放弃。
+
+2.去https://github.com/rabbitmq/erlang-rpm/releases上下载最新的erlang包
+下载地址：https://github.com/rabbitmq/erlang-rpm/releases/download/v20.3.4/erlang-20.3.4-1.el7.centos.x86_64.rpm
+
+安装：rpm -ivh erlang-20.3.4-1.el7.centos.x86_64.rpm
+检测erlang安装，使用erl命令进入操作界面（5+6后面有个小数点，q(). 退出操作）
+
+3.去http://www.rabbitmq.com/install-rpm.html下载最新的rabbitmq包，
+https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.5/rabbitmq-server-3.7.5-1.el7.noarch.rpm
+安装rabbitmq的rpm包时报错：
+error: Failed dependencies: 
+socat is needed by rabbitmq-server-3.6.9-1.el6.noarch 
+
+4.安装socat
+yum install -y socat
+继续安装rabbitmq的rpm包
+
+5.启动rabbitmq服务
+/sbin/service rabbitmq-server start
+查看RabbitMQ服务状态命令
+/sbin/service rabbitmq-server status
+
+6.配置网页访问
+查看RabbitMQ中用户命令
+rabbitmqctl list_users
+
+创建用户命令
+rabbitmqctl add_user defi defi
+
+
+赋予用户权限命令
+rabbitmqctl  set_permissions -p "/" defi '.*' '.*' '.*'
+
+
+赋予用户角色命令
+rabbitmqctl set_user_tags hjp administrator
+
+
+开启rabbitmq管理控制台命令
+rabbitmq-plugins enable rabbitmq_management
+
+访问http://localhost:15672/
