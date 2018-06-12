@@ -14,6 +14,7 @@ git clone https://github.com/DeemOpen/zkui.git（下载到当前目录）
 使用sdkman安装
 sdk install maven
 mvn -version
+在zkui的目录中运行
 mvn clean install
 
 3.修改配置
