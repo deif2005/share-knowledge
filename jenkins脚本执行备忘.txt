@@ -1,0 +1,21 @@
+jenkins执行jar包脚本
+#!/bin/bash
+cd /home/usi_device_service/script
+./stop.sh
+echo "Execute shell Finish"
+BUILD_ID=device-service-provider-1.0.0 nohup /home/usi_device_service/script/startup.sh &
+
+stop.sh
+echo "Stopping device-service-provider"
+pid=`ps -ef | grep device-service-provider-1.0.0.jar | grep -v grep | awk '{print $2}'`
+if [ -n "$pid" ]
+then
+   echo "kill -9 的pid:" $pid
+   kill -9 $pid
+fi
+
+startup.sh
+echo "startup 授予当前用户权限"
+chmod 777 /home/usi_device_service/device-service-provider-1.0.0.jar
+echo "execute jar"
+nohup java -jar /home/usi_device_service/device-service-provider-1.0.0.jar &
