@@ -1,0 +1,39 @@
+1.如果 Unixtop或 Windows任务管理器(Task Manager)显示服务的 CPU 占用率小于 70%，(shows that the CPU usage percentage with your workload is less than 70 %,）你的系统瓶颈可能在磁盘读写上。或许你提交了大量的事务，或者是缓冲池(buffer pool)太小了。将缓冲池设大点会有所帮助，但一定要注意不能大于物理内存的 80%。
+ 
+2.在一个事务中包含几个修改。如果事务对数据库进行了修改，那么在这个事务提交时 InnoDB 必须刷新日志到磁盘上。因为硬盘的旋转速度通常至多为 167 转/秒，那么只要磁盘不欺骗操作系统，提交的事务数目限止也同样为 167 次/秒·用户。
+ 
+3.如果掉失最近的几个事务无所谓的话，可以在my.cnf文件中将参数innodb_flush_log_at_trx_commit设置为 0。InnoDB 无论如何总是尝试一秒刷新(flush)一次日志，尽管刷新并不能得到保证。
+ 
+4.将日志文件(log files)设大一点，使日志文件的总和正好与缓冲池(buffer pool)一样大。当 InnoDB 用光日志文件的空间时，它不得不在一个时间点上将缓冲池内修改过的内容写到磁盘上。 小的日志文件可能引起不必要的磁盘写操作。但是大的日志文件的缺点就是在数据恢复时将占用较长的时间。
+ 
+5.同样 log buffer 尽量设大点，比如说 8 MB。
+ 
+6.如果要存储变长的字符串或字段可能会包含大量的 NULLs，请使用VARCHAR型字段代替CHAR。一个CHAR(n)字段总是使用 n bytes 来存储数据，即使这个字符串很短或是一个 NULL 值。较小的表更加适合缓冲池同时能够减少磁盘 I/O 。
+ 
+7.(适合从 3.23.41 以上版本) 在某些版本的 Linux 和 Unixes 中，使用 Unixfsync或其它类似的方法将文件刷新到磁盘是异常地慢的。InnoDB 默认的方法就是fsync。如果你对数据库系统的磁盘写性能不能感到满意，你可以尝试在my.cnf中将innodb_flush_method设置为O_DSYNC，尽管O_DSYNC选项在多数的系统上看起来比较慢。
+ 
+8.在向 InnoDB 导入数据时，请确认 MySQL 没有打开autocommit=1。否则每个插入语句都要将 log 刷新到磁盘。在你的 SQL 导入文件的第一行加入
+ 
+set autocommit=0;并在最后一行加入commit;
+ 
+如果使用mysqldump选项--opt，你将会得到一个快速导入 InnoDB 表的转储(dump)文件，甚至可以不再使用上面所提的set autocommit=0; ... commit;。
+ 
+9.小心 insert 集全的大回滚(roolback)：在插入时 InnoDB 使用插入缓冲来减少磁盘 I/O，但在相应的回滚中却没有使用这样的机制。一个 disk-bound rollback 可能会花费相应插入时间的 30 倍。如果发生一个失控的回滚，你可以查看第 6.1 章节的技巧来停止它。
+ 
+10.同样也要小心一个大的 disk-bound 的操作。使用DROP TABLE或TRUNCATE(从 MySQL-4.0 以上) 来清空一个表，而不要使用DELETE FROM yourtable。
+ 
+11.如果需要插入大量记录行可以使用多行(multi-line)的INSERT来减少客户端与服务器端的通信开销：
+ 
+INSERT INTO yourtable VALUES (1, 2), (5, 5);
+ 
+这个技巧对插入任何表均有效，而不仅仅是 InnoDB。
+ 
+12.如果在辅键上有UNIQUE约束，从 3.23.52 和 4.0.3 开始，可以通过在一个导入会话中将唯一键检查(uniqueness check)关闭来提高数据导入速度：
+ 
+SET UNIQUE_CHECKS=0;一个大的表导入这将减少大量的磁盘 I/O，因为这时 InnoDB 可能使用自身的插入缓冲来分批地记录辅助索引。
+ 
+13.如果在表中有一个子FOREIGN KEY约束，从 3.23.52 和 4.0.3 开始，可以通过在一个导入会话中将外键检查(foreign key check)关闭来提高数据导入速度：
+ 
+SET FOREIGN_KEY_CHECKS=0;
+ 
+对一个大的表导入这将减少大量的磁盘 I/O。
