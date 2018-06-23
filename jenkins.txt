@@ -54,4 +54,3 @@ sudo service jenkins start
 
 从该文件中获取进入密码
 vi /var/lib/jenkins/secrets/initialAdminPassword
-

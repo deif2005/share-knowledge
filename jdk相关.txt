@@ -2,7 +2,8 @@
 1.用java -version,rpm -qa | grep java查看安装的java相关的应用
 2.用rpm -e --nodeps xxx来卸载对应的程序
 3.在oracle官网下载jdk,由于有license验证，在wget后面要加上license验证：
-wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-sebackup-cookie" -P /usr/soft http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.tar.gz
+wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-sebackup-cookie" -P /usr/soft 
+http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz
 
 4.使用tar解压压缩包:tar -zxvf jdk-8u161-linux-x64.tar.gz
 5.设置环境变量:vi /etc/profile
@@ -15,3 +16,7 @@ export JAVA_HOME JRE_HOME CLASS_PATH PATH
 让修改生效:source /etc/profile
 
 6.验证JDK有效性  java -version
+
+7.卸载
+rpm -qa|grep jdk找出jdk版本
+yum -y remove jdk-1.7.0_67-fcs.x86_64

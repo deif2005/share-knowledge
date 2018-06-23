@@ -19,9 +19,17 @@ yum install -y socat
 继续安装rabbitmq的rpm包
 
 5.启动rabbitmq服务
-/sbin/service rabbitmq-server start
+nohup /usr/sbin/rabbitmq-server start &
+或者
+nohup rabbitmq-server start &
+
+停止rabbitmq
+rabbitmqctl stop 
+
 查看RabbitMQ服务状态命令
-/sbin/service rabbitmq-server status
+/usr/sbin/service rabbitmq-server status
+或
+rabbitmqctl status 
 
 6.配置网页访问
 查看RabbitMQ中用户命令
