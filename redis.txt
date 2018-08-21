@@ -50,3 +50,15 @@ redis-cli SHUTDOWN
 Redis可以妥善处理 SIGTERM信号，所以使用 kill Redis 进程的 PID也可以正常结束Redis，效果与发送SHUTDOWN命令一样。
 
 
+redis-cli
+或
+redis-cli -h ip地址 -p 端口 -a 密码
+
+Redis默认支持16个数据库，对外都是以一个从0开始递增数命令。
+select 1
+get test
+ 
+说明：
+    1.redis不支持自定义数据库名称称
+    2.redis不支持为每个数据库设置访问密码
+    3.redis的多个数据库之间不是完全隔离，flushall命令会清空所有数据
