@@ -1,0 +1,39 @@
+字符串转list
+String abc = "aaa,bbb,ccc";
+String[] arr = abc.split(",");
+List<String> list = java.util.Arrays.aslist(abc);
+
+json转换
+list转jsonArray
+net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(courseAndCardList);
+
+json串转对象
+JSONArray jsonArray1 = JSONArray.fromObject(memberCardListStr);
+historyCardList = (List)net.sf.json.JSONArray.toCollection(jsonArray1,HistoryCard.class);
+
+list转json
+String jsonStr = net.sf.json.JSONArray.fromObject(courseAndCardList).toString();
+net.sf.json.JSONArray jsonArray1 = net.sf.json.JSONArray.fromObject(jsonStr);
+
+jsonarray转list对象
+List<CourseAndCard> courseAndCardList2 = (List)net.sf.json.JSONArray.toCollection(jsonArray1,CourseAndCard.class); 
+
+舍掉小数取整:Math.floor(3.5)=3
+四舍五入取整:Math.rint(3.5)=4
+进位取整:Math.ceil(3.1)=4 
+
+Map
+Iterator iterator = uploadFileResponse.getTypeValueMap().entrySet().iterator();
+while (iterator.hasNext()){
+    Map.Entry entry = (Map.Entry) iterator.next();
+    Object key = entry.getKey();
+    Object value = entry.getValue();
+}
+
+List转数组
+ArrayList<String> memberIdList = (ArrayList)dataMap.get("memberIdList");
+String[] memberIdArray = memberIdList.toArray(new String[memberIdList.size()]);
+
+数组转List
+String[] empPicture = empBusinessRelation1.getEmpPicture().split(";");
+ArrayList<String> list = new ArrayList<String>(Arrays.asList(empPicture));
