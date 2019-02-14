@@ -1,0 +1,14 @@
+1.下载
+wget -P /usr/soft https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
+
+2.解压
+xz -d node-v10.15.0-linux-x64.tar.xz
+tar -xf node-v10.15.0-linux-x64.tar
+
+3.建立快捷关联
+ln -s /usr/soft/node-v10.15.0-linux-x64/bin/npm /usr/bin/npm
+ln -s /usr/soft/node-v10.15.0-linux-x64/bin/node /usr/bin/node
+
+4.测试安装
+node -v
+npm

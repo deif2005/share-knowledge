@@ -1,3 +1,10 @@
+修改mysql密码设置规则
+set global validate_password_policy=0;
+
+set global validate_password_length=4;
+
+flush privileges;
+
 root远程登录权限修改：
 GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY "defi123"; //defi123为远程连接的密码 需满足密码规则
 FLUSH PRIVILEGES;

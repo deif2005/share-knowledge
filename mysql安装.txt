@@ -1,0 +1,38 @@
+密码:defi
+
+1、卸载系统自带的 mariadb-lib
+[root@centos-linux ~]# rpm -qa|grep mariadb
+ mariadb-libs-5.5.44-2.el7.centos.x86_64 
+[root@centos-linux ~]# rpm -e mariadb-libs-5.5.44-2.el7.centos.x86_64 --nodeps
+
+2、下载并安装
+wget https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-5.7.24-1.el7.x86_64.rpm-bundle.tar
+解压 tar -xvf mysql-5.7.24-1.el7.x86_64.rpm-bundle.tar
+rpm -ivh mysql-community-common-5.7.24-1.el7.x86_64.rpm
+rpm -ivh mysql-community-libs-5.7.24-1.el7.x86_64.rpm
+rmp -ivh mysql-community-client-5.7.24-1.el7.x86_64.rpm
+rpm -ivh mysql-community-server-5.7.24-1.el7.x86_64.rpm
+
+3、复制初始密码
+grep 'temporary password' /var/log/mysqld.log
+
+4、启动MySQL
+启动 systemctl start mysqld.service
+状态 systemctl status mysqld.service
+停止 systemctl stop mysqld.service
+
+5、root登录
+mysql -uroot -p
+
+其它
+lsof -i:3306查看端口
+netstat -anop|grep 3306
+修改密码设置规则
+set global validate_password_policy=0;
+set global validate_password_length=1;
+FLUSH PRIVILEGES;
+设置root密码
+set password for root@localhost=password('defi');
+设置远程连接密码
+GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY "defi";
+FLUSH PRIVILEGES;

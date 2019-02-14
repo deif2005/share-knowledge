@@ -1,0 +1,3 @@
+./redis-cli -a wdredis123 -n 2[源库的index] keys '*' | xargs -I '{}' ./redis-cli -a wdredis123 -n 2 migrate 192.168.15.124 6379 '' 2[目标库index] 10000[延时时间] COPY keys '{}'
+备注：目前已知migrate不能指定密码 所以 目标库不能设置密码
+可以redis-cli进入连接后再执行migrate 192.168.15.124 6379 '' 2 10000 COPY keys 'onLineSum'[指定key值]
