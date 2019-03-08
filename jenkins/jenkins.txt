@@ -1,0 +1,56 @@
+1.去https://jenkins.io/download上下载.wget命令
+
+2.
+可以把war包直接部署到servlet容器中，如tomcat。
+可以使用命令直接运行war包，java -jar jenkins.war，切换到jenkins.war存放的目录
+
+
+
+
+下载rpm包到本地
+
+在linux下使用rpm包安装命令：
+
+sudo rpm -ih jenkins-1.562-1.1.noarch.rpm
+
+
+自动安装完成之后： 
+
+/usr/lib/jenkins/jenkins.war    WAR包 
+
+/etc/sysconfig/jenkins       配置文件
+
+/var/lib/jenkins/       默认的JENKINS_HOME目录
+
+/var/log/jenkins/jenkins.log    Jenkins日志文件
+
+
+1. 安装jdk环境
+
+先检查一下java虚拟机有没有安装，如果没有就安装
+
+java -version（whereis java查找java路径）
+
+
+2.在jenkins配置文件中配置
+
+需要“vi /etc/init.d/jenkins”，把java路径加上
+candidates="/usr/java/jdk1.7.0_79/bin/java"
+
+vi /etc/sysconfig/jenkins
+
+找到修改端口号：
+
+JENKINS_PORT="8080"  此端口不冲突可以不修改 
+
+修改jenkins默认的操作用户，linux下jenkins默认使用jenkins用户进行脚本和文件的操作，如果不修改，在部署项目时需要调整涉及到的文件和目录的操作权限，可以调整jenkins配置文件，将用户修改为root用户。
+
+vi /etc/sysconfig/jenkins
+
+将JENKINS_USER="jenkins"调整为JENKINS_USER="root"
+
+启动命令：
+sudo service jenkins start
+
+从该文件中获取进入密码
+vi /var/lib/jenkins/secrets/initialAdminPassword

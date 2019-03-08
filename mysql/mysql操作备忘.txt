@@ -1,0 +1,42 @@
+修改mysql密码设置规则
+set global validate_password_policy=0;
+
+set global validate_password_length=4;
+
+flush privileges;
+
+root远程登录权限修改：
+GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY "defi123"; //defi123为远程连接的密码 需满足密码规则
+FLUSH PRIVILEGES;
+
+修改用户权限:
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO developer@"%" IDENTIFIED BY "developer" WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+创建用户：
+create user  zx_root   IDENTIFIED by 'xxxxx';   //identified by 会将纯文本密码加密作为散列值存储
+
+删除：
+drop user newuser;   //mysql5之前删除用户时必须先使用revoke 删除用户权限，然后删除用户，mysql5之后drop 命令可以删除
+
+更改密码：
+set password for zx_root =password('xxxxxx');
+
+查看用户权限：
+show grants for zx_root;
+
+赋予权限:
+grant select on dmc_db.*  to zx_root;
+
+回收权限：
+revoke  select on dmc_db.*  from  zx_root;  //如果权限不存在会报错
+
+问题：caching-sha2-password
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+FLUSH PRIVILEGES;
+
+
+alter user 'root'@'localhost' identified by 'defi';
