@@ -10,6 +10,14 @@
 Linux centos关机命令：
 　　1、halt 立刻关机
 　　2、poweroff 立刻关机
+
+修改系统启动项
+查看启动项：
+chkconfig --list(2-5都是on，表明会自动启动)
+修改启动项:
+chkcinfig servicename on/off
+还没添加的服务:
+chkconfig --add servicename
 #-----------------------------------------------------
 
 #----------------vi操作文件命令---------------------
