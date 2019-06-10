@@ -13,13 +13,13 @@ rpm -ivh mysql-community-libs-5.7.24-1.el7.x86_64.rpm
 rmp -ivh mysql-community-client-5.7.24-1.el7.x86_64.rpm
 rpm -ivh mysql-community-server-5.7.24-1.el7.x86_64.rpm
 
-3、复制初始密码
-grep 'temporary password' /var/log/mysqld.log
-
-4、启动MySQL
+3、启动MySQL
 启动 systemctl start mysqld.service
 状态 systemctl status mysqld.service
 停止 systemctl stop mysqld.service
+
+4、复制初始密码,先启动MySQL服务在复制密码
+grep 'temporary password' /var/log/mysqld.log
 
 5、root登录
 mysql -uroot -p
@@ -28,11 +28,16 @@ mysql -uroot -p
 lsof -i:3306查看端口
 netstat -anop|grep 3306
 修改密码设置规则
-set global validate_password_policy=0;
-set global validate_password_length=1;
+set global validate_password_policy=0;(0 or LOW 校验级别最低，只校验密码长度，只要长度跟validate_password_length一样即可，默认长度是8位。可以通过：)
+set global validate_password_length=4;(validate_password_length最小值是4位)
 FLUSH PRIVILEGES;
 设置root密码
 set password for root@localhost=password('defi');
-设置远程连接密码
+设置远程连接密码(该密码不同于用户密码,远程连接时使用该密码)
 GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY "defi";
 FLUSH PRIVILEGES;
+
+6.配置mysql开机启动
+
+vi /etc/rc.local
+在文件中添加 service  mysqld start即可
